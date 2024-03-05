@@ -27,7 +27,18 @@ def large_lip():
 
         # result_path = large_lip_logic(temp_path,pod_id)
         b64 = large_lip_logic(temp_path,pod_id)
-        return jsonify({'base64_data': b64})
+        image_data = base64.b64decode(b64)
+        # filename = secure_filename(file.filename)
+        file_extension = "png"
+        unique_filename = f"result-{int(time.time())}.{file_extension}"
+        temp_path = os.path.join(output_directory, unique_filename)
+        with open(unique_filename,"wb") as f:
+            f.write(image_data)
+        image2 = im.open(unique_filename)
+        image_np2 = np.array(image2)
+        image_url2 = convert_to_url(image_np2)
+        return image_url2
+        # return jsonify({'base64_data': b64})
 
         # return send_file(result_path, as_attachment=True)
 
