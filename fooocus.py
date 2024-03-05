@@ -7,7 +7,7 @@ import time
 from PIL import Image as im
 
 def host_url(pod_id):
-    return f"https://{pod_id}-8888.proxy.runpod.net"
+    return f"https://{pod_id}-8628.proxy.runpod.net"
 
 def focus_endpoint(image_url,mask_url,pod_id):
 
@@ -15,11 +15,19 @@ def focus_endpoint(image_url,mask_url,pod_id):
             "prompt": "lips filler, plumper lips, large lips, beautiful perfect lips",
             "negative_prompt" : "imperfect lips",
             "style_selections":["Fooocus V2,Fooocus Enhance,Fooocus Sharp, Fooocus Negative"],
+            "loras": [
+                {
+                  "model_name": "sd_xl_offset_example-lora_1.0.safetensors",
+                  "weight": 0.1
+                }
+            ],
+            "advanced_params":{
+                "mixing_image_prompt_and_inpaint": true
+            }   
             "require_base64":True,
             "async_process": False,
             "input_image" : image_url,
             "input_mask" : mask_url,
-            "base_model_name" : "juggernautXL_v8Rundiffusion.safetensors",
             "image_prompts": [
                 {
             "cn_img": image_url,
