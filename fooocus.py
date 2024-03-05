@@ -16,6 +16,8 @@ def focus_endpoint(image_url,mask_url,pod_id):
             "negative_prompt" : "imperfect lips",
             "style_selections":["Fooocus V2,Fooocus Enhance,Fooocus Sharp, Fooocus Negative"],
             "style_selections":["Fooocus V2,Fooocus Enhance,Fooocus Sharp, Fooocus Negative"],
+            "input_image" : image_url,
+            "input_mask" : mask_url,
             "loras": [
                 {
                   "model_name": "sd_xl_offset_example-lora_1.0.safetensors",
@@ -33,8 +35,7 @@ def focus_endpoint(image_url,mask_url,pod_id):
             "cn_stop": 1,
             "cn_weight": 1,
                 "cn_type": "ImagePrompt"
-                }],
-            "image_prompts" : [],
+                }]
             }
     response = requests.post(url=f"{host_url(pod_id)}/v2/generation/image-prompt",
                         data=json.dumps(params),
