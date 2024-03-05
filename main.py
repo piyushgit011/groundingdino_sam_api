@@ -2,7 +2,10 @@ from flask import Flask, request, jsonify, send_file
 from werkzeug.utils import secure_filename
 import os, time
 from maskgen import large_lip_logic, medium_lip_logic, light_lip_logic
-
+import base64
+import json 
+from np2b64 import convert_to_url
+from PIL import Image as im
 app = Flask(__name__)
 
 output_directory = "./recieved_files/"
@@ -34,9 +37,7 @@ def large_lip():
         temp_path = os.path.join(output_directory, unique_filename)
         with open(unique_filename,"wb") as f:
             f.write(image_data)
-        image2 = im.open(unique_filename)
-        image_np2 = np.array(image2)
-        image_url2 = convert_to_url(image_np2)
+        image_url2 = convert_to_url(unique_filename)
         return image_url2
         # return jsonify({'base64_data': b64})
 
@@ -61,7 +62,15 @@ def medium_lip():
 
         # result_path = medium_lip_logic(temp_path)
         b64 = medium_lip_logic(temp_path,pod_id)
-        return jsonify({'base64_data': b64})
+        image_data = base64.b64decode(b64)
+        # filename = secure_filename(file.filename)
+        file_extension = "png"
+        unique_filename = f"result-{int(time.time())}.{file_extension}"
+        temp_path = os.path.join(output_directory, unique_filename)
+        with open(unique_filename,"wb") as f:
+            f.write(image_data)
+        image_url2 = convert_to_url(unique_filename)
+        return image_url2
         # return send_file(result_path, as_attachment=True)
 
 @app.route('/light_lip_mask', methods=['POST'])
@@ -85,7 +94,15 @@ def light_lip():
         # result_path = light_lip_logic(temp_path)
 
         b64 = light_lip_logic(temp_path,pod_id)
-        return jsonify({'base64_data': b64})
+        image_data = base64.b64decode(b64)
+        # filename = secure_filename(file.filename)
+        file_extension = "png"
+        unique_filename = f"result-{int(time.time())}.{file_extension}"
+        temp_path = os.path.join(output_directory, unique_filename)
+        with open(unique_filename,"wb") as f:
+            f.write(image_data)
+        image_url2 = convert_to_url(unique_filename)
+        return image_url2
         # return send_file(result_path, as_attachment=True)
     
 if __name__ == '__main__':
