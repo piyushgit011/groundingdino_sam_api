@@ -24,7 +24,7 @@ def focus_endpoint(image_url,mask_url,pod_id):
             ],
             "advanced_params":{
                 "mixing_image_prompt_and_inpaint": true
-            }   
+            },   
             "require_base64":True,
             "async_process": False,
             "image_prompts": [
