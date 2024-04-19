@@ -14,15 +14,9 @@ def focus_endpoint(image_url,mask_url,pod_id):
     params={
             "prompt": "lips filler, plumper lips, large lips, beautiful perfect lips",
             "negative_prompt" : "imperfect lips",
-            "style_selections":["Fooocus V2,Fooocus Enhance,Fooocus Sharp, Fooocus Negative"],
+            "style_selections":["Fooocus V2,Fooocus Enhance,Fooocus Sharp, Fooocus Negative, Fooocus Masterpiece"],
             "input_image" : image_url,
             "input_mask" : mask_url,
-            "loras": [
-                {
-                  "model_name": "sd_xl_offset_example-lora_1.0.safetensors",
-                  "weight": 0.1
-                }
-            ],
             "advanced_params":{
                 "mixing_image_prompt_and_inpaint": True
             },   
